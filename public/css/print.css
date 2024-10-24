@@ -1,0 +1,34 @@
+/* public/css/print.css */
+
+@media print {
+    @page {
+        margin: 2;
+        size: auto; /* auto is the initial value */
+    }
+
+    /* Cacher uniquement les URL dans les liens */
+    a:link:after,
+    a:visited:after
+     {
+        content: "";
+    }
+
+    /* Additional print styling */
+    .school-logo {
+        width: 100px;
+    }
+
+    .receipt-body {
+        margin-top: 20px;
+    }
+
+    .receipt-footer {
+        margin-top: 40px;
+        text-align: left;
+    }
+
+    .signature {
+        text-align: left;
+        margin-top: 50px;
+    }
+}

@@ -1,0 +1,39 @@
+public function effectifEleves(Request $request)
+    {
+        $classe = $request->input('classe');
+
+        // Si on choisit "TOUTES", on récupère tous les élèves, sinon seulement ceux de la classe spécifique
+        $eleves = $classe === 'TOUTES LES CLASSES'
+            ? Eleve::orderBy('nom')->orderBy('prenom')->orderBy('classe')->get()
+            : Eleve::where('classe', $classe)->orderBy('nom')->orderBy('prenom')->orderBy('classe')->get();
+
+        // Pour chaque élève, on va chercher les paiements de cantine et transport
+        foreach ($eleves as $eleve) {
+            // Récupérer le total déjà payé et restant pour la cantine
+            $cantine = DB::table('cantine')
+                ->where('id_eleve', $eleve->id_eleve)
+                ->select(DB::raw('SUM(deja_payee) as total_deja_payee'), DB::raw('SUM(montant_restant) as total_restant'))
+                ->first();
+
+            $scolarite = DB::table('eleves')
+                ->where('id_eleve', $eleve->id_eleve)
+                ->select(DB::raw('SUM(scolarite_payee) as total_deja_payee'), DB::raw('SUM(scolarite_restante) as total_restant'))
+                ->first();
+
+            // Récupérer le total déjà payé et restant pour le transport
+            $transport = DB::table('transport')
+                ->where('id_eleve', $eleve->id_eleve)
+                ->select(DB::raw('SUM(deja_payee) as total_deja_payee'), DB::raw('SUM(montant_restant) as total_restant'))
+                ->first();
+
+            // Ajouter ces informations aux élèves
+            $eleve->total_cantine_payee = $cantine->total_deja_payee ?? 0;
+            $eleve->total_cantine_restant = $cantine->total_restant ?? 0;
+            $eleve->total_transport_payee = $transport->total_deja_payee ?? 0;
+            $eleve->total_transport_restant = $transport->total_restant ?? 0;
+            $eleve->total_scolarite_payee = $scolarite->total_deja_payee ?? 0;
+            $eleve->total_scolarite_restant = $scolarite->total_restant ?? 0;
+        }
+
+        return view('requetes.effectif_eleves', compact('eleves', 'classe'));
+    }

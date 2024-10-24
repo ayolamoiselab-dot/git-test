@@ -1,0 +1,45 @@
+/* Styles pour le conteneur de succès */
+.success-container {
+    text-align: center;
+    margin-top: 50px;
+}
+
+/* Styles pour l'animation du rond coché en vert */
+.circle-animation {
+    display: inline-block;
+    position: relative;
+    width: 80px;
+    height: 80px;
+}
+
+/* Styles pour l'animation du rond coché en vert */
+.checkmark {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 3px solid #4CAF50;
+    border-right-color: transparent;
+    animation: rotate 2s linear ;
+    position: relative; /* Ajout d'une position relative pour pouvoir positionner le pseudo-élément */
+}
+
+/* Styles pour la coche verte à l'intérieur du cercle */
+.checkmark::before {
+    content: "";
+    position: absolute;
+    top: 22px;
+    left: 15px;
+    width: 15px;
+    height: 30px;
+    border: solid #4CAF50;
+    border-width: 0 4px 4px 0;
+    transform: rotate(45deg);
+}
+
+
+/* Animation de rotation pour le rond coché */
+@keyframes rotate {
+    100% {
+        transform: rotate(360deg);
+    }
+}
