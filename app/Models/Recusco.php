@@ -25,4 +25,12 @@ class Recusco extends Model
         
     ];
 
+    // App\Models\Recusco.php
+
+public function user()
+{
+    return $this->belongsTo(User::class);
+}
+
+
 }

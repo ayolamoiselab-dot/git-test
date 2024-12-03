@@ -14,6 +14,8 @@ use App\Models\informatique;
 use App\Models\piscine;
 use App\Models\musique;
 use Illuminate\Support\Facades\DB; // Ajoutez cette ligne
+use Illuminate\Support\Facades\Auth;
+
 
 class EleveController extends Controller
 {
@@ -161,6 +163,7 @@ class EleveController extends Controller
             $recu->montant_verse = $montantVerseAujourdHui;
             $recu->montant_restant = $eleve->scolarite_restante;
             $recu->statut = $eleve->scolarite_restante == 0 ? 'soldé' : 'non soldé';
+            $recu->user_id = Auth::id(); // Associe l'utilisateur connecté
             $recu->updated_at = now();
             $recu->save();
         }
@@ -1299,7 +1302,9 @@ class EleveController extends Controller
         } else {
             $numeroRecu = 'REC00000';
         }
-    
+        
+        $signatureUtilisateur = $recus->user ? $recus->user->name : 'Signature de l\'administrateur'; // Assurez-vous que 'name' existe dans la table users
+
         // Créer les données du reçu
         $data = [
             'logo' => asset('img/logopoussi_preview_rev_1.png'),
@@ -1310,7 +1315,8 @@ class EleveController extends Controller
             'total_paye' => $totalPaye,
             'montant_restant' => $montantRestant,
             'date_enregistrement' => $recus ? $recus->created_at->format('d/m/Y') : '',
-            'signature' => 'Signature de l\'administrateur',
+            //'signature' => 'Signature de l\'administrateur',
+            'signature' => $signatureUtilisateur,
             'statut' => $statut,
             'type' => $types,
         ];

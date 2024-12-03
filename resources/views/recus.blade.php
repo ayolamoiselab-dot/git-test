@@ -28,7 +28,7 @@
             <p>Date d'enregistrement : {{ $date_enregistrement }}</p>
         </div>
         <div class="signature">
-            <p>{{ $signature }}</p>
+            <p>Facturé par:{{ $signature }}</p>
         </div>
     </div>
 
@@ -175,7 +175,7 @@
             <p>Date d'enregistrement : {{ $date_enregistrement }}</p>
         </div>
         <div class="signature">
-            <p>{{ $signature }}</p>
+            <p>Facturé par: {{ $signature }}</p>
         </div>
     </div>
 

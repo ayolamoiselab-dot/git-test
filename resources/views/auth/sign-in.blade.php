@@ -20,6 +20,14 @@
         <label for="password_confirmation">Confirm Password:</label>
         <input type="password" id="password_confirmation" name="password_confirmation" required>
     </div>
+    <div>
+        <label for="role">Rôle :</label>
+        <select name="role" id="role" class="form-control" required>
+            <option value="user">Utilisateur</option>
+            <option value="admin">Administrateur</option>
+            <option value="accountant">Comptable</option>
+        </select>
+    </div>
     <button type="submit">Register</button>
 </form>
 @endsection

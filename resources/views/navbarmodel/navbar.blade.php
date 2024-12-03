@@ -81,6 +81,9 @@
                            <a href="{{ route('dashboard') }}">Gestion&Dashboard</a>
                             <a href="{{ route('logoutpro') }}">Se Deconnecter</a>
                          </li>
+                         <div class="user-info">
+                            <p>Bienvenue, {{ Auth::user()->name ?? Auth::user()->email }}</p>
+                        </div>
                          @endguest
                        
                     </div>
@@ -88,24 +91,7 @@
                 <div class="right"> <button class="btn btn-primary"><a href="#contact">Contact</a></button> </div>
             </nav>
         </div>
-        <!--
-        <div class="hero flex items-centre justify-between">
-            <div class="left flex-1 justify-center">
-                <img src="img 1.jpg" />
-            </div>
-            <div class="right flex-1">
-                <h6>CODEWITHRANDOM</h6>
-                <h1>
-                    I'm a Web<br />
-                    <span>Developer</span>
-                </h1>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque
-                    illum nam nobis, minima laudantium fugit sequi nostrum quod impedit,
-                    beatae necessitatibus praesentium optio labore nemo!
-                </p>
-                <div><button class="btn btn-secondary">DOWNLOAD CV</button></div>
--->
+        
         </div>
         </div>
     </header>

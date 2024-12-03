@@ -27,7 +27,7 @@
             <p>Date d'enregistrement : {{ \Carbon\Carbon::parse($date_enregistrement)->format('d/m/Y') }}</p>
         </div>
         <div class="signature">
-            <p>{{ $signature }}</p>
+            <p>Facturé par: {{ $signature }}</p>
         </div>
     </div>
 
