@@ -1,4 +1,4 @@
-@extends("navbarmodel.navbar")
+@extends("navbarmodel.navbar2")
 
 @section('content')
 
@@ -14,4 +14,8 @@
 
     <button type="submit">Enregistrer Paiement</button>
 </form>
+
+
+
+
 @endsection

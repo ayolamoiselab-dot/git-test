@@ -1,5 +1,5 @@
 <!-- resources/views/requetes/contact_parent.blade.php -->
-@extends("navbarmodel.navbar")
+@extends("navbarmodel.navbar2")
 
 @section('content')
 <!DOCTYPE html>
@@ -18,4 +18,7 @@
             <button type="submit">Rechercher</button>
         </form>
     </div>
+
+
+    
 @endsection

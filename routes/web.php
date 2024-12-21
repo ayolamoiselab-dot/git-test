@@ -17,7 +17,9 @@ use App\Http\Controllers\CantineJournaliereController;
 use App\Http\Controllers\RecuController;
 use App\Http\Controllers\CantineJourController;
 use App\Http\Controllers\CinetpayController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Auth;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,7 +32,7 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::middleware(['auth', 'verified'])->group(function () {
+/*Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', function () {
         return view('menusgestion.listmenus');
     })->name('dashboard');
@@ -38,7 +40,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/gestion', function () {
         return view('gestion');
     })->name('gestion');
+});*/
+
+
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 });
+
 
 Route::middleware(['auth', 'is_admin'])->group(function () {
     Route::get('/sign-in', [AdminController::class, 'showSignInForm'])->name('sign-in');

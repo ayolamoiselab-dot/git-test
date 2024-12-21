@@ -1,4 +1,4 @@
-@extends('navbarmodel.navbar')
+@extends('navbarmodel.navbar2')
 @section('title', 'Choix de l\'élève')
 @section('content')
 <div class="container">
@@ -17,4 +17,7 @@
         @endforeach
     </ul>
 </div>
+
+
+
 @endsection

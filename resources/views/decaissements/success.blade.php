@@ -1,4 +1,4 @@
-@extends("navbarmodel.navbar")
+@extends("navbarmodel.navbar2")
 @section("title", "Décaissement Réussi")
 @section("content")
 <main class="page-content">
@@ -9,4 +9,8 @@
         <a href="{{ route('decaissements.show', $decaissement->id) }}" class="btn btn-primary">Générer la Fiche de Décaissement</a>
     </div>
 </main>
+
+
+
 @endsection
+

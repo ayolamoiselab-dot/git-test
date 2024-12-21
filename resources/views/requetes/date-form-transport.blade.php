@@ -1,4 +1,4 @@
-@extends("navbarmodel.navbar")
+@extends("navbarmodel.navbar2")
 @section("content")
     <div class="container">
         <h1>Requête : Versements de Transport</h1>
@@ -11,4 +11,7 @@
             <button type="submit" class="btn btn-primary mt-2">Voir les résultats</button>
         </form>
     </div>
+
+
+    
 @endsection

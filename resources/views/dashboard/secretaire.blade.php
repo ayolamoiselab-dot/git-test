@@ -1,4 +1,4 @@
-@extends("navbarmodel.navbar")
+
 @section("title", "")
 @section("content")
 <!-- Ajouter Font Awesome pour les icônes -->
@@ -7,27 +7,29 @@
 
 <main class="page-content">
     
+    <h6>Bienvenue Secretaire {{ Auth::user()->name}}</h6>
 
+    <p>Ici Vous Aurez Notamment Accès Aux : </p>
    
     <div class="card">
         <div class="content">
-            <h2 class="title"><mark style="color: green">REQUETES</mark></h2>
-            <a href="{{url('/requetes')}}"><button class="btn">Acceder</button></a>
+            <h2 class="title" style="color: blue">REQUETES</h2>
+            
         </div>
     </div>
    
 
     <div class="card">
         <div class="content">
-            <h2 class="title"><mark style="color: green">VENTES</mark></h2>
-            <a href="{{url('/ventes')}}"><button class="btn">ACCEDER</button></a>
+            <h2 class="title" style="color: blue">VENTES</h2>
+           
         </div>
     </div>
 
     <div class="card">
         <div class="content">
-            <h2 class="title"><mark style="color: green">DECAISSEMENTS</mark></h2>
-            <a href="{{url('/decaissements')}}"><button class="btn">ACCEDER</button></a>
+            <h2 class="title" style="color: blue">DECAISSEMENTS</h2>
+            
         </div>
     </div>
 
@@ -78,4 +80,8 @@
         color: #007bff;
     }
 </style>
+
+
+
+
 @endsection

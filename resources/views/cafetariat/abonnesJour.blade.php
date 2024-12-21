@@ -94,4 +94,5 @@ th, td {
         color: black !important;
     }
 }
+
 </style>

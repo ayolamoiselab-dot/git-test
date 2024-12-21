@@ -1,5 +1,5 @@
 <!-- resources/views/cafetariat/form.blade.php -->
-@extends("navbarmodel.navbar")
+@extends("navbarmodel.navbar2")
 @section("title", "Nouvel Enregistrement Cafetariat")
 @section("content")
 
@@ -78,5 +78,7 @@ document.getElementById('type_paiement').addEventListener('change', function() {
 });
 
 </script>
+
+
 
 @endsection

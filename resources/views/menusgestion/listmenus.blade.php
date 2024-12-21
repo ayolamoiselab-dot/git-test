@@ -1,15 +1,24 @@
-@extends("navbarmodel.navbar")
+@extends("navbarmodel.navbar2")
 @section("title", "")
 @section("content")
 
 @if(Auth::user()->role == 'admin' || Auth::user()->is_admin)
-    @include('dashboard.admin') <!-- Fichier spécifique pour les admins -->
+    @include('dashboard.admin_maj', [
+        'totalEleves' => $totalEleves,
+        'totalScolarite' => $totalScolarite,
+        'totalCantine' => $totalCantine,
+        'scolariteToday' => $scolariteToday,
+        'cantineToday' => $cantineToday,
+        'scolariteParMois' => $scolariteParMois,
+        'cantineParMois' => $cantineParMois,
+        'scolariteData' => json_encode(array_values($scolariteParMois)),
+        'cantineData' => json_encode(array_values($cantineParMois)),
+    ])
 @elseif(Auth::user()->role == 'secretaire')
-    @include('dashboard.secretaire') <!-- Fichier pour comptables -->
+    @include('dashboard.secretaire')
 @elseif(Auth::user()->role == 'controlleur')
-    @include('dashboard.controlleur') <!-- Fichier pour comptables -->
+    @include('dashboard.controlleur')
 @else
-    <!-- Contenu par défaut -->
     <p>Vous n'avez pas les droits nécessaires pour accéder à cette section.</p>
 @endif
 

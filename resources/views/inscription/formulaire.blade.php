@@ -1,4 +1,4 @@
-@extends('navbarmodel.navbar')
+@extends('navbarmodel.navbar2')
 @section('title', 'Inscription')
 @section('content')
 
@@ -79,4 +79,8 @@
         margin-top: 10px;
     }
     </style>
+
+
+
+
 @endsection

@@ -1,6 +1,6 @@
 <!-- resources/views/cafetariat/period_form.blade.php -->
 
-@extends("navbarmodel.navbar")
+@extends("navbarmodel.navbar2")
 @section("title", "Recherche des Recettes Périodiques")
 @section("content")
 
@@ -23,5 +23,7 @@
         </div>
     
 </main>
+
+
 
 @endsection

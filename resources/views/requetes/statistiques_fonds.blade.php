@@ -1,5 +1,5 @@
 <!-- resources/views/requetes/statistiques_fonds.blade.php -->
-@extends("navbarmodel.navbar")
+@extends("navbarmodel.navbar2")
 
 @section('content')
 <!DOCTYPE html>

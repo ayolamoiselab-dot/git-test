@@ -1,4 +1,4 @@
-@extends("navbarmodel.navbar")
+@extends("navbarmodel.navbar2")
 @section('title', 'Décaissements du Jour')
 
 @section('content')
@@ -124,4 +124,7 @@
         background-color: darkred;
     }
 </style>
+
+
+
 @endsection

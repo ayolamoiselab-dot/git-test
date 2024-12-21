@@ -1,5 +1,5 @@
 <!-- resources/views/cafetariat/success.blade.php -->
-@extends("navbarmodel.navbar")
+@extends("navbarmodel.navbar2")
 @section("title", "Enregistrement Réussi")
 @section("content")
 
@@ -21,5 +21,8 @@
         <a href="{{ url('/cafetariat/recette/' . $cafetariat->id) }}"><button class="btn btn-primary">Générer Fiche Reçu</button></a>
     </div>
 </main>
+
+
+
 
 @endsection

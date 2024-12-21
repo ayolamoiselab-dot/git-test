@@ -1,4 +1,4 @@
-@extends("navbarmodel.navbar")
+@extends("navbarmodel.navbar2")
 @section("content")
 <!DOCTYPE html>
 <html>
@@ -40,6 +40,9 @@
             <button type="submit" class="btn btn-primary">Lancer la Requête</button>
         </form>
     </div>
+
+
+    
 </body>
 </html>
 @endsection

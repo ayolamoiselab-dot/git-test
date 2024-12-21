@@ -123,12 +123,12 @@
         </div>
     </div>
 
-    <div class="card">
+    <!--<div class="card">
         <div class="content">
             <h2 class="title"><mark style="color: green">PAYEMENT</mark></h2>
             <a href="{{ url('/payement') }}"><button class="btn">ACCEDER</button></a>
         </div>
-    </div>
+    </div>-->
 
     
 </main>

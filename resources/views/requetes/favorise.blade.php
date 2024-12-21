@@ -1,5 +1,5 @@
 <!-- resources/views/requetes/favorise.blade.php -->
-@extends("navbarmodel.navbar")
+@extends("navbarmodel.navbar2")
 
 @section('content')
 <!DOCTYPE html>
@@ -34,6 +34,10 @@
             <p>{{ session('success') }}</p>
         </div>
     @endif
+
+
+
+    
 </body>
 </html>
 @endsection

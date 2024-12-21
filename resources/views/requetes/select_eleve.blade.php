@@ -1,5 +1,5 @@
 <!-- resources/views/requetes/select_eleve.blade.php -->
-@extends("navbarmodel.navbar")
+@extends("navbarmodel.navbar2")
 
 @section('content')
 <!DOCTYPE html>

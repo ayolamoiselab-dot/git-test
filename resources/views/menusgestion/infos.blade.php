@@ -1,4 +1,4 @@
-@extends("navbarmodel.navbar")
+@extends("navbarmodel.navbar2")
 @section("title", "Infos")
 @section("content")
 <!-- Ajouter jQuery pour faciliter les opérations AJAX -->
@@ -149,4 +149,8 @@
         });
     });
 </script>
+
+
+
+
 @endsection

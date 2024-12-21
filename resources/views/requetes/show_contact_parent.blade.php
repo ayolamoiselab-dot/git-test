@@ -1,5 +1,5 @@
 <!-- resources/views/requetes/show_contact_parent.blade.php -->
-@extends("navbarmodel.navbar")
+@extends("navbarmodel.navbar2")
 
 @section('content')
 <!DOCTYPE html>

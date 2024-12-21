@@ -1,4 +1,4 @@
-@extends("navbarmodel.navbar")
+@extends("navbarmodel.navbar2")
 
 @section('content')
 <!DOCTYPE html>
@@ -38,6 +38,10 @@
 
         <button type="submit">Rechercher</button>
     </form>
+
+
+
+    
 </body>
 </html>
 @endsection

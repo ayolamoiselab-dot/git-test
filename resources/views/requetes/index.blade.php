@@ -1,5 +1,5 @@
 <!-- resources/views/requetes/index.blade.php -->
-@extends("navbarmodel.navbar")
+@extends("navbarmodel.navbar2")
 @section("content")
 <!DOCTYPE html>
 <html>
@@ -68,4 +68,7 @@
             </ul>
         </div>
     </div>
+
+
+    
 @endsection

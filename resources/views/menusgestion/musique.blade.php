@@ -1,4 +1,4 @@
-@extends("navbarmodel.navbar")
+@extends("navbarmodel.navbar2")
 @section("title", "Gestion de la musique")
 @section("content")
 
@@ -143,5 +143,7 @@
         cursor: pointer;
     }
 </style>
+
+
 
 @endsection

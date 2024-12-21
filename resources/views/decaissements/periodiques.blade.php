@@ -1,5 +1,5 @@
 <!-- resources/views/decaissements/periodiques.blade.php -->
-@extends("navbarmodel.navbar")
+@extends("navbarmodel.navbar2")
 @section("title", "Liste des Décaissements Périodiques")
 @section("content")
 <main class="page-content">
@@ -19,4 +19,8 @@
         </form>
     </div>
 </main>
+
+
+
+
 @endsection

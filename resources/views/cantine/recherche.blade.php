@@ -1,4 +1,4 @@
-@extends("navbarmodel.navbar")
+@extends("navbarmodel.navbar2")
 
 @section('content')
 
@@ -19,4 +19,8 @@
         @endforeach
     </ul>
 @endif
+
+
+
+
 @endsection

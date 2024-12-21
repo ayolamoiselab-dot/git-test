@@ -1,4 +1,4 @@
-@extends("navbarmodel.navbar")
+@extends("navbarmodel.navbar2")
 
 @section('content')
     <div class="container">
@@ -47,4 +47,7 @@
             </tbody>
         </table>
     </div>
+
+
+    
 @endsection

@@ -1,4 +1,4 @@
-@extends("navbarmodel.navbar")
+@extends("navbarmodel.navbar2")
 @section('content')
     <div class="container">
         <h1>Ajouter du stock</h1>

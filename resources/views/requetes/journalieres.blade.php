@@ -1,5 +1,5 @@
 <!-- resources/views/requetes/journalieres.blade.php -->
-@extends("navbarmodel.navbar")
+@extends("navbarmodel.navbar2")
 @section("content")
 <!DOCTYPE html>
 <html>
@@ -16,4 +16,7 @@
             <li><button type="submit" class="btn btn-link"><a href="{{ route('requetes.journalieres.transport') }}">Versement Transport du Jour</a></button></li>
         </ul>
     </div>
+
+
+    
 @endsection

@@ -1,4 +1,4 @@
-@extends("navbarmodel.navbar")
+@extends("navbarmodel.navbar2")
 @section("title", "Nouveau Décaissement")
 @section("content")
 <main class="page-content">
@@ -52,4 +52,7 @@
         </form>
     </div>
 </main>
+
+
+
 @endsection

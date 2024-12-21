@@ -1,5 +1,5 @@
 <!-- resources/views/decaissements/rechercher.blade.php -->
-@extends("navbarmodel.navbar")
+@extends("navbarmodel.navbar2")
 @section("title", "Rechercher un Décaissement")
 @section("content")
 <main class="page-content">
@@ -27,4 +27,8 @@
         </form>
     </div>
 </main>
+
+
+
+
 @endsection

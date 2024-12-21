@@ -1,4 +1,4 @@
-@extends('navbarmodel.navbar')
+@extends('navbarmodel.navbar2')
 @section('title', 'Gestion de la Cantine')
 @section('content')
 
@@ -138,5 +138,7 @@
         cursor: pointer;
     }
 </style>
+
+
 
 @endsection

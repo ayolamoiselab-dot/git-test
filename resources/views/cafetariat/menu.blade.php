@@ -1,5 +1,5 @@
 <!-- resources/views/cafetariat/menu.blade.php -->
-@extends("navbarmodel.navbar")
+@extends("navbarmodel.navbar2")
 @section("title", "Menu Cafetariat")
 @section("content")
 
@@ -35,5 +35,6 @@
         </div>
     </div>
 </main>
+
 
 @endsection

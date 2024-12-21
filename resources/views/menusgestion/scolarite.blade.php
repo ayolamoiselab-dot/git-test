@@ -1,4 +1,4 @@
-@extends('navbarmodel.navbar')
+@extends('navbarmodel.navbar2')
 @section('title', '')
 @section('content')
     <div class="container">
@@ -129,4 +129,8 @@
             margin-top: 10px;
         }
     </style>
+
+
+
+
 @endsection

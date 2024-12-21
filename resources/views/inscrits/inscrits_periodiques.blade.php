@@ -1,4 +1,4 @@
-@extends("navbarmodel.navbar")
+@extends("navbarmodel.navbar2")
 @section("content")
 
 <main class="page-content">
@@ -26,4 +26,7 @@
         margin-top: 2rem; /* Ajuste cette valeur pour descendre le titre */
     }
 </style>
+
+
+
 @endsection

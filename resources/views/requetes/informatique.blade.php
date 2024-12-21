@@ -1,5 +1,5 @@
 <!-- resources/views/requetes/transport.blade.php -->
-@extends("navbarmodel.navbar")
+@extends("navbarmodel.navbar2")
 
 @section('content')
 
@@ -22,6 +22,9 @@
 
         <button type="submit">Rechercher</button>
     </form>
+
+
+    
 </body>
 </html>
 @endsection

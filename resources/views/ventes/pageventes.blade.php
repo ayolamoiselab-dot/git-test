@@ -1,4 +1,4 @@
-@extends("navbarmodel.navbar")
+@extends("navbarmodel.navbar2")
 @section('title', 'Gestion des Ventes')
 
 @section('content')
