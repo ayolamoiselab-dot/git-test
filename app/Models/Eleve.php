@@ -62,6 +62,8 @@ class Eleve extends Model
         'montant8',
         'dernier_versement_date',
         'dernier_versement_montant',
+        'reduction_fcfa',
+        'reduction_pourcentage',
     ];
 
     public function cantineJournaliere()
@@ -69,6 +71,13 @@ class Eleve extends Model
         return $this->hasOne(CantineJournaliere::class, 'id_eleve', 'id_eleve');
     }
     
+
+    // Dans le modèle Eleve (app/Models/Eleve.php)
+
+public function cantine()
+{
+    return $this->belongsTo(Cantine::class,'id_eleve');
+}
 
     
 }

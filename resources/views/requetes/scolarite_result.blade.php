@@ -35,16 +35,22 @@
                 @foreach($elevesNotUpToDate as $index => $eleve)
                     <tr>
                         <td>{{ $index + 1 }}</td> <!-- Numéro de ligne -->
-                        <td>{{ $eleve->nom }} @if($eleve->est_favorise == 'favorise')<sup>favorisé</sup>@endif</td>
+                        <td>
+                            {{ $eleve->nom }}
+                            @if($eleve->est_favorise == 1)
+                                <sup class="favorise">Favorisé</sup>
+                            @endif
+                        </td>
                         <td>{{ $eleve->classe }}</td>
                         <td>{{ $eleve->scolarite_total }}</td>
                         <td>{{ $eleve->scolarite_payee }}</td>
                         <td>{{ $eleve->restant_a_payer }}</td>
                         <td>{{ $eleve->dernier_versement_date }}</td>
-                        
                     </tr>
                 @endforeach
             </tbody>
+            
+            
             <tfoot>
                 <tr>
                     <th colspan="4">Total</th>
@@ -180,6 +186,14 @@ h1 {
     font-weight: bold;
     text-align: right;
 }
+
+.favorise {
+    color: red;          /* Couleur rouge pour attirer l'attention */
+    font-weight: bold;   /* Gras pour plus de visibilité */
+    font-size: 0.8em;    /* Légèrement plus petit que le texte principal */
+    margin-left: 4px;    /* Espacement avec le nom */
+}
+
 
     </style>
 </body>

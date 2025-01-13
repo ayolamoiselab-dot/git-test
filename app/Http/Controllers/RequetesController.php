@@ -40,38 +40,63 @@ class RequetesController extends Controller
         $tranche = $request->input('tranche');
         $classe = $request->input('classe');
         $tri = $request->input('tri'); // Récupérer l'option de tri
-
+    
         $query = Eleve::query();
-
+    
         if (!empty($classe)) {
             $query->where('classe', $classe);
         }
-
+    
         // Ajouter une condition pour trier les résultats
         if ($tri == 'nouveau') {
             $query->where('frais_inscription', 25000);
         } elseif ($tri == 'ancien') {
             $query->where('frais_inscription', 0);
         }
-
+    
         $elevesNotUpToDate = $query->where(function ($query) use ($tranche) {
-            if ($tranche == 1) {
-                $query->whereRaw('COALESCE(scolarite_payee, 0) < 50000');
-            } elseif ($tranche == 2) {
-                $query->whereRaw('COALESCE(scolarite_payee, 0) < 100000');
-            } elseif ($tranche == 3) {
-                $query->where(function ($query) {
-                    $query->whereRaw('scolarite_total = 140000 AND COALESCE(scolarite_payee, 0) < 140000')
-                        ->orWhereRaw('scolarite_total = 125000 AND COALESCE(scolarite_payee, 0) < 125000');
-                });
-            }
+            $query->where(function ($query) use ($tranche) {
+                if ($tranche == 1) {
+                    $query->whereRaw('COALESCE(scolarite_payee, 0) < 50000');
+                } elseif ($tranche == 2) {
+                    $query->whereRaw('COALESCE(scolarite_payee, 0) < 100000');
+                } elseif ($tranche == 3) {
+                    $query->where(function ($query) {
+                        $query->whereRaw('scolarite_total = 140000 AND COALESCE(scolarite_payee, 0) < 140000')
+                            ->orWhereRaw('scolarite_total = 125000 AND COALESCE(scolarite_payee, 0) < 125000');
+                    });
+                }
+            });
+    
+            // Cas des élèves favorisés
+            $query->orWhere(function ($query) use ($tranche) {
+                if ($tranche == 1) {
+                    $query->where('est_favorise', true)
+                        ->whereRaw('COALESCE(scolarite_payee, 0) < scolarite_total / 3');
+                } elseif ($tranche == 2) {
+                    $query->where('est_favorise', true)
+                        ->whereRaw('COALESCE(scolarite_payee, 0) < (scolarite_total * 2) / 3');
+                } elseif ($tranche == 3) {
+                    $query->where('est_favorise', true)
+                        ->whereRaw('COALESCE(scolarite_payee, 0) < scolarite_total');
+                }
+            });
         })
-            ->get()
-            ->map(function ($eleve) use ($tranche) {
-                $eleve->dernier_versement_date = $this->getLastPaymentDate($eleve);
-                $eleve->dernier_versement_montant = $this->getLastPaymentAmount($eleve);
-
-                // Calcul du reste à payer pour la tranche
+        ->get()
+        ->map(function ($eleve) use ($tranche) {
+            $eleve->dernier_versement_date = $this->getLastPaymentDate($eleve);
+            $eleve->dernier_versement_montant = $this->getLastPaymentAmount($eleve);
+    
+            // Calcul du reste à payer pour les tranches
+            if ($eleve->est_favorise) {
+                if ($tranche == 1) {
+                    $eleve->restant_a_payer = ($eleve->scolarite_total / 3) - $eleve->scolarite_payee;
+                } elseif ($tranche == 2) {
+                    $eleve->restant_a_payer = (($eleve->scolarite_total * 2) / 3) - $eleve->scolarite_payee;
+                } elseif ($tranche == 3) {
+                    $eleve->restant_a_payer = $eleve->scolarite_total - $eleve->scolarite_payee;
+                }
+            } else {
                 if ($tranche == 1) {
                     $eleve->restant_a_payer = 50000 - $eleve->scolarite_payee;
                 } elseif ($tranche == 2) {
@@ -79,16 +104,19 @@ class RequetesController extends Controller
                 } elseif ($tranche == 3) {
                     $eleve->restant_a_payer = ($eleve->scolarite_total == 140000 ? 140000 : 125000) - $eleve->scolarite_payee;
                 }
-                return $eleve;
-            });
-
+            }
+    
+            return $eleve;
+        });
+    
         // Calcul des totaux
         $totalScolaritePayee = $elevesNotUpToDate->sum('scolarite_payee');
         $totalDernierVersement = $elevesNotUpToDate->sum('dernier_versement_montant');
         $totalRestantAPayer = $elevesNotUpToDate->sum('restant_a_payer');
-
+    
         return view('requetes.scolarite_result', compact('elevesNotUpToDate', 'tranche', 'classe', 'tri', 'totalScolaritePayee', 'totalDernierVersement', 'totalRestantAPayer'));
     }
+    
 
 
 
@@ -158,15 +186,17 @@ class RequetesController extends Controller
         $tranche = $request->input('tranche');
         $classe = $request->input('classe');
         $tri = $request->input('tri'); // Récupérer l'option de tri
-
-        $query = Cantine::query();
-
+    
+        // Création de la requête de base
+        $query = cantine::query();
+    
+        // Filtrer par classe si défini
         if (!empty($classe)) {
             $query->whereHas('eleve', function ($query) use ($classe) {
                 $query->where('classe', $classe);
             });
         }
-
+    
         // Ajouter une condition pour trier les résultats
         if ($tri == 'nouveau') {
             $query->whereHas('eleve', function ($query) {
@@ -177,35 +207,66 @@ class RequetesController extends Controller
                 $query->where('frais_inscription', 0);
             });
         }
-
-        // Obtenir la liste des élèves non à jour pour la tranche choisie
+    
+        // Filtrage des élèves non à jour selon la tranche choisie
         $elevesNotUpToDate = $query->where(function ($query) use ($tranche) {
-            if ($tranche == 1) {
-                $query->whereRaw('COALESCE(deja_payee, 0) < 55000');
-            } elseif ($tranche == 2) {
-                $query->whereRaw('COALESCE(deja_payee, 0) < 110000');
-            } elseif ($tranche == 3) {
-                $query->whereRaw('COALESCE(deja_payee, 0) < 165000');
-            }
-        })
-            ->with('eleve')
-            ->get()
-            ->map(function ($cantine) use ($tranche) {
-                $cantine->dernier_versement_cantine_date = $this->getLastCantinePaymentDate($cantine);
-                $cantine->dernier_versement_cantine_montant = $this->getLastCantinePaymentAmount($cantine);
-
-                // Calcul du restant à payer pour la tranche sélectionnée
-                $trancheMontant = $this->getTrancheAmount($tranche);
-                $cantine->restant_a_payer = $trancheMontant - $cantine->deja_payee;
-
-                return $cantine;
+            $query->whereHas('eleve', function ($query) use ($tranche) {
+                // Filtrage des élèves favorisés (est_favorise_cantine = true)
+                $query->where('est_favorise_cantine', true)
+                      ->when($tranche == 1, function ($query) {
+                          $query->whereRaw('COALESCE(deja_payee, 0) < frais_cantine / 3');
+                      })
+                      ->when($tranche == 2, function ($query) {
+                          $query->whereRaw('COALESCE(deja_payee, 0) < (frais_cantine * 2) / 3');
+                      })
+                      ->when($tranche == 3, function ($query) {
+                          $query->whereRaw('COALESCE(deja_payee, 0) < frais_cantine');
+                      });
+    
+                // Filtrage des élèves non favorisés (est_favorise_cantine = false)
+                $query->orWhere(function ($query) use ($tranche) {
+                    $query->where('est_favorise_cantine', false)
+                          ->when($tranche == 1, function ($query) {
+                              $query->whereRaw('COALESCE(deja_payee, 0) < 55000');
+                          })
+                          ->when($tranche == 2, function ($query) {
+                              $query->whereRaw('COALESCE(deja_payee, 0) < 110000');
+                          })
+                          ->when($tranche == 3, function ($query) {
+                              $query->whereRaw('COALESCE(deja_payee, 0) < 165000');
+                          });
+                });
             });
-
+        })
+        ->with('eleve')  // Charger les élèves associés
+        ->get()
+        ->map(function ($cantine) use ($tranche) {
+            // Récupérer les dernières informations de paiement
+            $cantine->dernier_versement_cantine_date = $this->getLastCantinePaymentDate($cantine);
+            $cantine->dernier_versement_cantine_montant = $this->getLastCantinePaymentAmount($cantine);
+    
+            // Calcul du restant à payer pour la tranche sélectionnée
+            if ($cantine->eleve->est_favorise_cantine) {
+                if ($tranche == 1) {
+                    $cantine->restant_a_payer = ($cantine->eleve->frais_cantine / 3) - $cantine->deja_payee;
+                } elseif ($tranche == 2) {
+                    $cantine->restant_a_payer = ($cantine->eleve->frais_cantine * 2 / 3) - $cantine->deja_payee;
+                } elseif ($tranche == 3) {
+                    $cantine->restant_a_payer = $cantine->eleve->frais_cantine - $cantine->deja_payee;
+                }
+            } else {
+                // Pour les élèves non favorisés, on applique la logique classique
+                $cantine->restant_a_payer = $this->getTrancheAmount($tranche) - $cantine->deja_payee;
+            }
+    
+            return $cantine;
+        });
+    
         // Calcul des totaux
         $totalScolaritePayee = $elevesNotUpToDate->sum('deja_payee');
         $totalDernierVersement = $elevesNotUpToDate->sum('dernier_versement_cantine_montant');
         $totalRestantAPayer = $elevesNotUpToDate->sum('restant_a_payer'); // Total du restant à payer
-
+    
         return view('requetes.cantine_result', compact(
             'elevesNotUpToDate',
             'tranche',
@@ -216,6 +277,7 @@ class RequetesController extends Controller
             'totalRestantAPayer' // Envoyer le total à la vue
         ));
     }
+    
 
     private function getTrancheAmount($tranche)
     {

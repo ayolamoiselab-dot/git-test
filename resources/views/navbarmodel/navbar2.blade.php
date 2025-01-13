@@ -94,6 +94,12 @@
                         <h6 class="collapse-header">Informatique:</h6>
                         <a class="collapse-item" href="{{url('/menuinformatique')}}">INSCRIPTION</a>
                         <a class="collapse-item" href="{{ url('/pagemiseajourinformatique') }}">Mise à jour</a>
+
+
+                        <h6 class="collapse-header">GESTION FAVORISATION</h6>
+                        <a class="collapse-item" href="{{url('/favorisation')}}">FAVORISER DES ELEVES</a>
+                        <a class="collapse-item" href="{{ url('/favorisemaj') }}">Mise à jour</a>
+                        <a class="collapse-item" href="{{ url('/favorisation/liste/favorises') }}">Liste des favorisés</a>
                     </div>
                 </div>
             </li>

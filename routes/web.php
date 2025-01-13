@@ -20,6 +20,7 @@ use App\Http\Controllers\CinetpayController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Auth;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
+use App\Http\Controllers\FavorisationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -394,3 +395,23 @@ Route::post('/cinetpay/notify', [CinetpayController::class, 'paymentNotify'])->n
 Route::get('/payement', function () {
     return view('cinetpay.payment');
 });
+
+
+Route::any('/favorisation', [FavorisationController::class, 'index'])->name('favorisation.index');
+Route::any('/favorisation/liste', [FavorisationController::class, 'listeEleves'])->name('favorisation.liste');
+Route::any('/favorisation/favoriser', [FavorisationController::class, 'favoriser'])->name('favorisation.favoriser');
+Route::any('/favorisation/mise-a-jour', [FavorisationController::class, 'miseAJour'])->name('favorisation.miseAJour');
+Route::any('/favorisation/enregistrer', [FavorisationController::class, 'enregistrerModifications'])->name('favorisation.enregistrer');
+
+
+Route::get('/favorisemaj', function () {
+    return view('favorisation.update');
+});
+Route::get('/favorisationajour', [FavorisationController::class, 'rechercher'])->name('favorisation.rechercher');
+Route::get('/favorisation/détails/{id}/{type}', [FavorisationController::class, 'afficherDetails'])->name('favorisation.details');
+
+// Afficher les élèves favorisés par type et classe
+Route::get('/favorisation/liste/favorises', [FavorisationController::class, 'formFavorises'])->name('favorisation.liste.favorises');
+
+// Obtenir les élèves favorisés
+Route::post('/favorisation/liste/favorises', [FavorisationController::class, 'listeElevesFavorises'])->name('favorisation.get.favorises');
