@@ -21,7 +21,13 @@
                     <td>{{ $numero++ }}</td>
                     <td>{{ $eleve->nom }}</td>
                     <td>{{ $eleve->prenom }}</td>
-                    <td>{{ $eleve->eleve->classe }}</td>
+                    <td>
+                        @if($type === 'scolarite')
+                            {{ $eleve->classe }}
+                        @elseif($type === 'cantine')
+                            {{ $eleve->eleve->classe }}
+                        @endif
+                    </td>
                 </tr>
             @endforeach
         </tbody>

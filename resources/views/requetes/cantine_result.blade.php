@@ -8,25 +8,26 @@
         table {
             width: 100%;
             border-collapse: collapse;
+            margin-top: 20px;
         }
 
         th, td {
-            border: 1px solid black;
-            padding: 8px;
+            border: 1px solid #ddd;
+            padding: 10px;
             text-align: left;
         }
 
         th {
-            background-color: #f2f2f2;
+            background-color: #4CAF50;
+            color: white;
         }
 
         tr:nth-child(even) {
             background-color: #f9f9f9;
         }
 
-        .error {
-            color: red;
-            margin-bottom: 15px;
+        tr:hover {
+            background-color: #f1f1f1;
         }
 
         .totals-row {
@@ -34,9 +35,53 @@
             background-color: #dcdcdc;
         }
 
-        /* Aligner les cellules du bas */
         .totals-row td {
             text-align: right;
+        }
+
+        .favorise {
+            color: red;
+            font-size: 0.9em;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        p {
+            text-align: center;
+            font-size: 1.2em;
+            color: #666;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f7f7f7;
+        }
+
+        table {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Custom button for printing */
+        .print-btn {
+            display: inline-block;
+            margin-bottom: 20px;
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            text-align: center;
+        }
+
+        .print-btn:hover {
+            background-color: #45a049;
         }
     </style>
 </head>
@@ -46,6 +91,7 @@
     @if($elevesNotUpToDate->isEmpty())
         <p>Aucun élève trouvé.</p>
     @else
+        <a href="#" class="print-btn" onclick="window.print()">Imprimer</a>
         <table>
             <thead>
                 <tr>
@@ -54,24 +100,25 @@
                     <th>Classe</th>
                     <th>Cantine Total</th>
                     <th>Cantine Payée</th>
-                    <th>Restant à completer</th>
-                    
+                    <th>Restant à Compléter</th>
                     <th>Date Dernier Versement</th>
-                   
                 </tr>
             </thead>
             <tbody>
                 @foreach($elevesNotUpToDate as $index => $eleve)
                     <tr>
                         <td>{{ $loop->iteration }}</td> <!-- Affiche le numéro -->
-                        <td>{{ $eleve->nom }}</td>
+                        <td>
+                            {{ $eleve->nom }}
+                            @if($eleve->est_favorise_cantine)
+                                <span class="favorise">(est favorisé)</span>
+                            @endif
+                        </td>
                         <td>{{ $eleve->eleve->classe }}</td>
-                        <td>{{ $eleve->frais_cantine }}</td>
-                        <td>{{ $eleve->deja_payee }}</td>
-                        <td>{{ $eleve->restant_a_payer }}</td>
-                       
+                        <td>{{ $eleve->frais_cantine }} FCFA</td>
+                        <td>{{ $eleve->deja_payee }} FCFA</td>
+                        <td>{{ $eleve->restant_a_payer }} FCFA</td>
                         <td>{{ $eleve->dernier_versement_cantine_date }}</td>
-                     
                     </tr>
                 @endforeach
 
@@ -79,10 +126,8 @@
                 <tr class="totals-row">
                     <td colspan="4" style="text-align: left;">Totaux</td>
                     <td>{{ $totalScolaritePayee }} FCFA</td>
-                    <td>{{ $totalRestantAPayer }} FCFA</td> <!-- Cellule vide pour laisser un espace sous "Restant à completer" -->
-                    <td></td> <!-- Cellule vide pour laisser un espace sous "Cantine Restante" -->
+                    <td>{{ $totalRestantAPayer }} FCFA</td>
                     <td></td> <!-- Cellule vide pour laisser un espace sous "Dernier Versement Date" -->
-                   
                 </tr>
             </tbody>
         </table>
